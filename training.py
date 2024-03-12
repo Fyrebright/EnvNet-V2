@@ -127,7 +127,7 @@ class CustomCallback(keras.callbacks.Callback):
                 U.to_hms(time_taken),
                 self.curLr,
                 logs.get("loss") if logs.get("loss") else 0,
-                logs.get("acc") if logs.get("acc")  else 0,
+                logs.get("acc") if logs.get("acc") else 0,
                 val_loss,
                 val_acc,
             )
