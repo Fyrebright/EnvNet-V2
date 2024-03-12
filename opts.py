@@ -6,7 +6,7 @@ def parse():
     parser = argparse.ArgumentParser(description='BC learning for sounds')
 
     # General settings
-    parser.add_argument('--dataset', required=False, default='esc50', choices=['esc10', 'esc50', 'urbansound8k'])
+    parser.add_argument('--dataset', required=False, default='esc50', choices=['esc05', 'esc50'])
     parser.add_argument('--netType', required=False, default='envnetv2', choices=['envnet', 'envnetv2'])
     parser.add_argument('--data', default='/home/mohaimen/Desktop/EXPERIMENTS/datasets/', required=False, help='Path to dataset')
     parser.add_argument('--split', type=int, default=-1, help='esc: 1-5, urbansound: 1-10 (-1: run on all splits)')
@@ -34,8 +34,8 @@ def parse():
     if opt.dataset == 'esc50':
         opt.nClasses = 50
         opt.nFolds = 5
-    elif opt.dataset == 'esc10':
-        opt.nClasses = 10
+    elif opt.dataset == 'esc05':
+        opt.nClasses = 5
         opt.nFolds = 5
     else:  # urbansound8k
         opt.nClasses = 10
@@ -60,7 +60,7 @@ def parse():
         'envnet': {'nEpochs': 600, 'LR': 0.01, 'schedule': [0.5, 0.75], 'warmup': 0},
         'envnetv2': {'nEpochs': 1000, 'LR': 0.1, 'schedule': [0.3, 0.6, 0.9], 'warmup': 10}
     }
-    default_settings['esc10'] = {
+    default_settings['esc05'] = {
         'envnet': {'nEpochs': 600, 'LR': 0.01, 'schedule': [0.5, 0.75], 'warmup': 0},
         'envnetv2': {'nEpochs': 600, 'LR': 0.01, 'schedule': [0.5, 0.75], 'warmup': 0}
     }

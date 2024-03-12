@@ -1,14 +1,17 @@
-import opts;
-from training import Trainer;
-#from keras.utils import plot_model
+import opts
+from training import Trainer
+
+# from keras.utils import plot_model
+
 
 def Main():
-    opt = opts.parse();
+    opt = opts.parse()
     for split in opt.splits:
-        print('+-- Split {} --+'.format(split));
-        trainer = Trainer(opt, split);
-        trainer.Train();
-        #break;
+        print("+-- Split {} --+".format(split))
+        trainer = Trainer(opt, split)
+        trainer.Train(opt.nClasses)
+        # break;
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     Main()
