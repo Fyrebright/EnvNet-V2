@@ -52,8 +52,12 @@ def parse():
     parser.add_argument("--nCrops", type=int, default=10)
 
     parser.add_argument("--fs", type=int, default=44100)
+    parser.add_argument("--noBC", default=False, action="store_true", help="BC learning")
 
     opt = parser.parse_args()
+
+    if opt.noBC:
+        opt.BC = False
 
     # Dataset details
     if opt.dataset == "esc50":

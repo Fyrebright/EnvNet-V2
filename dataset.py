@@ -83,7 +83,7 @@ class Generator(keras.utils.Sequence):
             labels.append(label)
 
         sounds = np.asarray(sounds)
-        labels = np.asarray(labels)
+        labels = np.asarray(labels)[:,0:1]
         if not self.train:
             sounds = sounds.reshape(sounds.shape[0] * sounds.shape[1], sounds.shape[2])
             labels = labels.reshape(labels.shape[0] * labels.shape[1], labels.shape[2])
