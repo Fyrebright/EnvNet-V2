@@ -51,6 +51,8 @@ def parse():
     # Testing settings
     parser.add_argument("--nCrops", type=int, default=10)
 
+    parser.add_argument("--fs", type=int, default=44100)
+
     opt = parser.parse_args()
 
     # Dataset details
@@ -71,10 +73,10 @@ def parse():
 
     # Model details
     if opt.netType == "envnet":
-        opt.fs = 16000
+        # opt.fs = 16000
         opt.inputLength = 24014
     else:  # envnetv2
-        opt.fs = 44100
+        # opt.fs = 44100
         opt.inputLength = 66650
 
     # Default settings (nEpochs will be doubled if opt.BC)

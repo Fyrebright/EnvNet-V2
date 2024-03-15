@@ -16,8 +16,8 @@ class Trainer:
         self.opt = opt
         self.split = split
 
-    def Train(self, n_classes=50):
-        envnet2 = models.EnvNet2(66650, n_classes)
+    def Train(self, n_classes=50, input_length=66650):
+        envnet2 = models.EnvNet2(input_length, n_classes)
         model = envnet2.createModel()
         print(model.summary())
         # exit();

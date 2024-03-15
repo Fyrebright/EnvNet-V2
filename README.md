@@ -1,3 +1,8 @@
+Fork to modify EnvnetV2 for predicting the 5 class categories in ESC50
+
+run:
+`python3 main.py --dataset esc05 --netType envnet --data ./data --nEpochs 2 --split -1`
+
 # EnvNet-V2
 Tensorflow implementation of between-class learning for sound recognition https://arxiv.org/abs/1711.10282
 

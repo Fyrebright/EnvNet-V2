@@ -9,7 +9,7 @@ def Main():
     for split in opt.splits:
         print("+-- Split {} --+".format(split))
         trainer = Trainer(opt, split)
-        trainer.Train(opt.nClasses)
+        trainer.Train(opt.nClasses, input_length=opt.inputLength)
         # break;
 
 

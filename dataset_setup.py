@@ -68,7 +68,7 @@ def convert_fs(src_path, dst_path, fs):
     for i, src_file in enumerate(sources):
         dst_file = src_file.replace(src_path, dst_path)
 
-        print(f"[{i: 4}/{count:4}] Sampling ")
+        print(f"[{i:4}/{count:4}] Sampling ")
         subprocess.call(
             "ffmpeg -i {} -ac 1 -ar {} -loglevel error -y {}".format(
                 src_file, fs, dst_file
