@@ -67,7 +67,7 @@ class ConvBNReLU:
         padding="valid",
         initial_w=keras.initializers.he_normal(),
         use_bias=False,
-    ):
+    ): #self.conv1 = ConvBNReLU(32, (1, 64), (1, 2))
         self.conv = L.Conv2D(
             filters=filters,
             kernel_size=kernel_size,

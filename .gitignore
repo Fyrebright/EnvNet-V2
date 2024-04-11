@@ -2,3 +2,4 @@ data
 __pycache__
 *.keras
 *.log
+nohup.out
