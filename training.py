@@ -36,14 +36,14 @@ class Trainer:
         lrate = keras.callbacks.LearningRateScheduler(self.GetLR)
         # best_model = keras.callbacks.ModelCheckpoint('best_model_fold-'+str(self.split )+'_epoch-{epoch:02d}_val_acc-{val_acc:.2f}.hdf5', monitor='val_acc', save_best_only=True, verbose=0);
         best_model = keras.callbacks.ModelCheckpoint(
-            "Split-" + str(self.split) + "_best_model.keras",
+            f"{self.opt.save}/Split-" + str(self.split) + "_best_model.keras",
             monitor="val_acc",
             save_best_only=True,
             verbose=0,
         )
         # early_stopping = keras.callbacks.EarlyStopping(monitor='loss', patience=100);
         csv_logger = keras.callbacks.CSVLogger(
-            "aug-fold-" + str(self.split) + "-training.log"
+            f"{self.opt.save}/aug-fold-" + str(self.split) + "-training.log"
         )
         custom_evaluator = CustomCallback(self.opt, trainGen, valGen)
         # callbacks_list = [lrate, custom_evaluator, best_model, early_stopping, csv_logger];

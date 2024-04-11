@@ -1,5 +1,6 @@
 import os
 import argparse
+import time
 
 
 def parse():
@@ -24,7 +25,11 @@ def parse():
         default=-1,
         help="esc: 1-5, urbansound: 1-10 (-1: run on all splits)",
     )
-    parser.add_argument("--save", default="None", help="Directory to save the results")
+    parser.add_argument(
+        "--save",
+        default=f"results/run_{time.time()}",
+        help="Directory to save the results",
+    )
     parser.add_argument("--testOnly", action="store_true")
     parser.add_argument("--gpu", type=int, default=0)
 
@@ -52,7 +57,9 @@ def parse():
     parser.add_argument("--nCrops", type=int, default=10)
 
     parser.add_argument("--fs", type=int, default=44100)
-    parser.add_argument("--noBC", default=False, action="store_true", help="BC learning")
+    parser.add_argument(
+        "--noBC", default=False, action="store_true", help="BC learning"
+    )
 
     opt = parser.parse_args()
 
@@ -127,16 +134,30 @@ def display_info(opt):
     else:
         learning = "standard"
 
-    print("+------------------------------+")
-    print("| Sound classification")
-    print("+------------------------------+")
-    print("| dataset  : {}".format(opt.dataset))
-    print("| netType  : {}".format(opt.netType))
-    print("| learning : {}".format(learning))
-    print("| augment  : {}".format(opt.strongAugment))
-    print("| nEpochs  : {}".format(opt.nEpochs))
-    print("| LRInit   : {}".format(opt.LR))
-    print("| schedule : {}".format(opt.schedule))
-    print("| warmup   : {}".format(opt.warmup))
-    print("| batchSize: {}".format(opt.batchSize))
-    print("+------------------------------+")
+    maxwidth = 15
+    line = f"+{'-'*(2*maxwidth+4)}+"
+
+    optstr = (
+        f"{line}\n"
+        "| Sound classification\n"
+        f"{line}\n"
+        f"| {'learning':{maxwidth}} : {learning:>{maxwidth}}\n"
+    )
+
+    for k, v in vars(opt).items():
+        if k == "save":
+            continue
+
+        try:
+            optstr += f"| {k:{maxwidth}} : {v:>{maxwidth}}\n"
+        except TypeError:
+            optstr += f"| {k:{maxwidth}} : {str(v):>{maxwidth}}\n"
+
+    optstr += f"{line}\n"
+
+    print(optstr)
+
+    with open(f"{opt.save}/opts", "w") as f:
+        f.write(optstr)
+
+    print(f"saving to {opt.save}...\n")
