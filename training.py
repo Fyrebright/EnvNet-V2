@@ -56,6 +56,8 @@ class Trainer:
             trainGen,
             epochs=self.opt.nEpochs,
             steps_per_epoch=len(trainGen.data) // trainGen.batch_size,
+            # validation_data=valGen,
+            # validation_steps=math.ceil(len(valGen.data) / valGen.batch_size),
             callbacks=callbacks_list,
             verbose=0,
         )
@@ -163,17 +165,22 @@ class CustomCallback(keras.callbacks.Callback):
         y_pred = y_pred.argmax(axis=1)
 
         # Doing the samething for y_target
-        y_target = (
-            (
-                y_target.reshape(
-                    y_target.shape[0] // self.opt.nCrops,
-                    self.opt.nCrops,
-                    y_target.shape[1],
-                )
-            )
-            .mean(axis=1)
-            .argmax(axis=1)
-        )
+        if self.opt.BC:
+            y_target = y_target.reshape(
+                y_target.shape[0] // self.opt.nCrops,
+                self.opt.nCrops,
+                y_target.shape[1],
+            ).mean(axis=1).argmax(axis=1)
+
+            y_target = y_target.mean(axis=1)
+
+        else:
+            # y_target = y_target.reshape(
+            #     y_target.shape[0] // self.opt.nCrops,
+            #     self.opt.nCrops,
+            #     y_target.shape[1],
+            # )
+            y_target = y_target.argmax(axis=1)
 
         accuracy = (y_pred == y_target).mean() * 100
         loss = np.mean(y_target - y_pred)

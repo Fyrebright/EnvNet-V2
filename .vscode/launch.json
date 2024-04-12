@@ -20,6 +20,15 @@
             "console": "integratedTerminal",
             "args": "--dataset esc05 --netType envnet --data ./data --nEpochs 128 --split 1 --noBC",
             "justMyCode": false
+        },{
+            "name": "Train8000",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args": "--dataset esc05 --netType envnet --data ./data --nEpochs 400 --split -1 --fs 8000 --noBC",
+            "justMyCode": true
         }
+        
     ]
 }

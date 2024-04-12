@@ -3,12 +3,14 @@ import numpy as np
 import random
 import utils as U
 from tensorflow import keras
+import tensorflow as tf
 
 
 class Generator(keras.utils.Sequence):
     "Generates data for Keras"
 
     def __init__(self, samples, labels, options, train=True):
+        super().__init__()
         "Initialization"
         self.data = [(samples[i], labels[i]) for i in range(0, len(samples))]
         self.opt = options
@@ -83,7 +85,7 @@ class Generator(keras.utils.Sequence):
             labels.append(label)
 
         sounds = np.asarray(sounds)
-        labels = np.asarray(labels)#[:,0:1]
+        labels = np.asarray(labels)[:,0:1]
         if not self.train:
             sounds = sounds.reshape(sounds.shape[0] * sounds.shape[1], sounds.shape[2])
             labels = labels.reshape(labels.shape[0] * labels.shape[1], labels.shape[2])
@@ -147,5 +149,9 @@ def setup(opt, split):
     # Iterator setup
     train_data = Generator(train_sounds, train_labels, opt, train=True)
     val_data = Generator(val_sounds, val_labels, opt, train=False)
+
+    # hacky way to switch to tf.data
+    # train_data = tf.data.Dataset.from_generator(train_data)
+    # val_data = tf.data.Dataset.from_generator(val_data)
 
     return train_data, val_data
